@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="purchreceipt" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="824716e8-b51a-4381-a553-c972d8ca325f">
+	<parameter name="prmfirmid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prmpurmid" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     suppliers.`supname` AS suppliers_supname,
+     suppliers.`supadd` AS suppliers_supadd,
+     suppliers.`supphone` AS suppliers_supphone,
+     suppliers.`company` AS suppliers_company,
+     suppliers.`supcr` AS suppliers_supcr,
+     purchases_m.`purchasedate` AS purchases_m_purchasedate,
+     purchases_m.`subtotal` AS purchases_m_subtotal,
+     purchases_m.`vat` AS purchases_m_vat,
+     purchases_m.`discount` AS purchases_m_discount,
+     purchases_m.`total` AS purchases_m_total,
+     purchases_m.`paidamt` AS purchases_m_paidamt,
+     purchases_s.`prodqty` AS purchases_s_prodqty,
+     purchases_s.`purchrate` AS purchases_s_purchrate,
+     purchases_s.`salesrate` AS purchases_s_salesrate,
+     products.`prodname` AS products_prodname,
+     products.`purchrate` AS products_purchrate,
+     products.`salesrate` AS products_salesrate,
+     firm.`firmname` AS firm_firmname,
+     firm.`firmprop` AS firm_firmprop
+FROM
+     `suppliers` suppliers INNER JOIN `purchases_m` purchases_m ON suppliers.`supid` = purchases_m.`supid`
+     INNER JOIN `purchases_s` purchases_s ON purchases_m.`purmid` = purchases_s.`purmid`
+     INNER JOIN `products` products ON purchases_s.`prodid` = products.`prodid`,
+     `firm` firm
+WHERE
+	firm.firmid=$P{prmfirmid}
+AND
+	purchases_m.purmid=$P{prmpurmid}]]>
+	</queryString>
+	<field name="suppliers_supname" class="java.lang.String"/>
+	<field name="suppliers_supadd" class="java.lang.String"/>
+	<field name="suppliers_supphone" class="java.lang.String"/>
+	<field name="suppliers_company" class="java.lang.String"/>
+	<field name="suppliers_supcr" class="java.lang.Float"/>
+	<field name="purchases_m_purchasedate" class="java.sql.Date"/>
+	<field name="purchases_m_subtotal" class="java.lang.Float"/>
+	<field name="purchases_m_vat" class="java.lang.Float"/>
+	<field name="purchases_m_discount" class="java.lang.Float"/>
+	<field name="purchases_m_total" class="java.lang.Float"/>
+	<field name="purchases_m_paidamt" class="java.lang.Float"/>
+	<field name="purchases_s_prodqty" class="java.lang.Long"/>
+	<field name="purchases_s_purchrate" class="java.lang.Float"/>
+	<field name="purchases_s_salesrate" class="java.lang.Float"/>
+	<field name="products_prodname" class="java.lang.String"/>
+	<field name="products_purchrate" class="java.lang.Float"/>
+	<field name="products_salesrate" class="java.lang.Float"/>
+	<field name="firm_firmname" class="java.lang.String"/>
+	<field name="firm_firmprop" class="java.lang.String"/>
+	<title>
+		<band height="122" splitType="Stretch">
+			<textField>
+				<reportElement uuid="224ee128-dea7-45d6-8f94-607d327c0eda" x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="635c7509-ba24-46fb-a08c-b57b34fe18bc" x="0" y="20" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmprop}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="56297a54-f43d-4d82-a8ff-3fc4a8bc5d8c" x="0" y="56" width="375" height="17"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Supplier Name : "+$F{suppliers_supname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a293a8ad-464a-4feb-bdf5-89d48f19d4a5" x="393" y="56" width="162" height="17"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Purchases Date : "+$F{purchases_m_purchasedate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4c3ef024-37bb-4c7f-a775-18b607c4c5ef" x="0" y="73" width="375" height="17"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Supplier Company Name : "+$F{suppliers_company}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="96d82838-649a-4aed-afff-1c3bbda16162" x="0" y="90" width="228" height="17"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Mobile No. : "+$F{suppliers_supphone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c6b1116d-9022-4900-9529-024133882c95" x="0" y="107" width="555" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Supplier Address : "+$F{suppliers_supadd}.replace("\n"," ")]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="5213a42e-8d69-4eda-9414-9c218887947e" mode="Transparent" x="0" y="0" width="575" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="7c7f5244-e068-4304-ae81-aa19e5f00e6c" x="0" y="0" width="301" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Product Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e098fd9f-0dd5-41bf-9542-5e2334fa4f05" x="302" y="0" width="78" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="beee90c3-0f41-4e97-94f7-57c1abacd162" x="380" y="0" width="1" height="20"/>
+			</line>
+			<staticText>
+				<reportElement uuid="7f76793d-abe4-42f5-9e71-4b5b6b4c0729" x="380" y="0" width="94" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Rate]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="6982452f-72c2-401e-89f3-6d7e19e94c50" x="474" y="0" width="1" height="20"/>
+			</line>
+			<staticText>
+				<reportElement uuid="381617de-4636-41f4-a3d0-086b19a6e3e9" x="474" y="0" width="101" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="50d46cb4-ba5b-413f-8589-8e59dd4296b0" x="301" y="0" width="1" height="20"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement uuid="f97ecfbd-4368-42ab-a917-ce81de852575" x="380" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="33504cc5-986f-4a45-8b68-b0a6f181562e" x="474" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="14850e5c-bdea-4fc0-a959-d01043f41eca" x="301" y="0" width="1" height="20"/>
+			</line>
+			<textField>
+				<reportElement uuid="7145256e-b070-4d49-aa86-d2b403f80298" x="302" y="0" width="78" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{purchases_s_prodqty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b05a7634-670b-482c-9019-4aadac6d312e" x="381" y="0" width="93" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{purchases_s_purchrate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5cb438b4-8799-4e5e-963d-3b880229083b" x="476" y="0" width="87" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{purchases_s_purchrate}*$F{purchases_s_prodqty}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="554843fa-345a-491a-994e-0e7fdd57db68" x="575" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="52c84d30-7e60-41c1-9292-88bc482d1b9e" x="0" y="0" width="1" height="20"/>
+			</line>
+			<textField>
+				<reportElement uuid="a2b64f00-976c-4ab4-b4a4-77f8d84853dc" x="2" y="0" width="299" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{products_prodname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="106" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="9cc3f36e-21cc-4f41-aaa4-0df5ffae7dc8" mode="Transparent" x="0" y="0" width="575" height="106"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="3f590dc2-3701-45a8-a067-9a364250562e" x="462" y="0" width="1" height="106"/>
+			</line>
+			<staticText>
+				<reportElement uuid="0234e9c1-11f5-4e1c-adc9-98d0e4fa2ee9" x="335" y="0" width="126" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Sub Total : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4069b6d8-b95f-40ed-aca9-bd1afc1ed58a" x="463" y="0" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{purchases_m_subtotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c24e6a7b-4f3c-4636-8ea7-3fdcddb9d7ea" x="335" y="15" width="126" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Discount : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c1a656cd-8bc4-4402-a142-27705b632de9" x="463" y="15" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{purchases_m_discount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="174dda47-3625-4385-9e58-e9b02dd731e6" x="335" y="30" width="126" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Sub Total  1 : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8f947def-8f0f-41e1-9a5f-dfafa39d2401" x="463" y="30" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{purchases_m_subtotal}-$F{purchases_m_discount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="068d3300-2253-417b-b299-19dd0165487e" x="463" y="45" width="112" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="b4ff317e-c051-47e4-a4c5-5210224c124e" x="335" y="46" width="126" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Vat : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6f12e8f8-c95c-453c-ac8e-2050be8cbb61" x="463" y="46" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{purchases_m_vat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="637941c8-54ef-4b66-861a-3fa2523f64da" x="463" y="61" width="100" height="15"/>
+				<textElement textAlignment="Right">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{purchases_m_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a060bfc6-3133-43c1-a494-e315ea10f00f" x="335" y="61" width="126" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Grand Total : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cefa2e54-f27b-426b-9fa3-fd75c224da64" x="335" y="76" width="126" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Paid Amount : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="cb7230d4-9bcf-4e3f-ab07-0585dd8d7f49" x="463" y="76" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{purchases_m_paidamt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="08b1c6bb-4f7d-4343-9f54-bd048f85890a" x="336" y="91" width="126" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Remaining Amount : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="067bcb73-13ec-4828-a078-72fea88edc92" x="463" y="92" width="100" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{purchases_m_total}-$F{purchases_m_paidamt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d355f9ef-2433-4b17-bf60-60614254ab52" x="2" y="86" width="226" height="20" forecolor="#FF0000"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Total Outstanding : "+$F{suppliers_supcr}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

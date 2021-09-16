@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesreturnlist" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="4a3916cd-b604-458f-a553-7aed429b2252">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="550"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="prmstartdate" class="java.util.Date"/>
+	<parameter name="prmenddate" class="java.util.Date"/>
+	<parameter name="prmfirmid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     salesreturn_m.`salesreturndate` AS salesreturn_m_salesreturndate,
+     salesreturn_m.`total` AS salesreturn_m_total,
+     salesreturn_m.`returnamount` AS salesreturn_m_returnamount,
+     customers.`custname` AS customers_custname,
+     customers.`custphone` AS customers_custphone,
+     sales_m.`salesdate` AS sales_m_salesdate,
+     firm.`firmname` AS firm_firmname,
+     salesreturn_m.`returncharge` AS salesreturn_m_returncharge
+FROM
+     `customers` customers INNER JOIN `salesreturn_m` salesreturn_m ON customers.`custid` = salesreturn_m.`custid`
+     INNER JOIN `sales_m` sales_m ON customers.`custid` = sales_m.`custid`
+     AND sales_m.`salemid` = salesreturn_m.`salesmid`,
+     `firm` firm
+WHERE
+     salesreturn_m.`salesreturndate` BETWEEN $P{prmstartdate} and $P{prmenddate}
+and firm.firmid=$P{prmfirmid}]]>
+	</queryString>
+	<field name="salesreturn_m_salesreturndate" class="java.sql.Date"/>
+	<field name="salesreturn_m_total" class="java.lang.Float"/>
+	<field name="salesreturn_m_returnamount" class="java.lang.Double"/>
+	<field name="customers_custname" class="java.lang.String"/>
+	<field name="customers_custphone" class="java.lang.String"/>
+	<field name="sales_m_salesdate" class="java.sql.Date"/>
+	<field name="firm_firmname" class="java.lang.String"/>
+	<field name="salesreturn_m_returncharge" class="java.lang.Double"/>
+	<title>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f7977d83-e467-42a1-a8ce-620ffaa071b7" x="0" y="24" width="822" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="14" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sales Return Report from "+new java.text.SimpleDateFormat("dd-MMM-yyyy").format($P{prmstartdate})+" to "+new java.text.SimpleDateFormat("dd-MMM-yyyy").format($P{prmenddate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7f16e74b-f815-4dec-9bb9-8c45b13d7248" x="0" y="0" width="822" height="24"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="dd607b8d-6bc0-42a8-be44-e61d05329845" x="0" y="0" width="317" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b8329546-3476-483a-9093-ec30e96f8344" x="452" y="0" width="78" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sales Date]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="8d6dddd9-7a03-4bd3-a3da-be5095005954" mode="Transparent" x="0" y="0" width="822" height="20"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="c2a82744-6ae8-4d96-a49c-974976dc4027" x="530" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="1a47bd27-ddc2-4e12-be8d-485d24c5751a" x="451" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="a3ce2342-388b-4328-8307-2203dabff0c1" x="603" y="0" width="1" height="20"/>
+			</line>
+			<staticText>
+				<reportElement uuid="1e1a4123-d095-4325-a1db-ff675fc185a2" x="604" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Rs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="646c01ee-0f97-46a4-9f86-d739c53593ea" x="531" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Return Date]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="f704f740-9f63-4313-8702-abb044766b4c" x="676" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="08d33dd6-b379-4bae-b5c8-be047fc395ad" x="749" y="0" width="1" height="20"/>
+			</line>
+			<staticText>
+				<reportElement uuid="af346798-d363-49e6-bdeb-17cf8421723f" x="677" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Return Rs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1a9326b4-012f-420a-8614-bd5805944336" x="750" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ret. Charges]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="e627a1df-da78-42de-8164-7512e1918879" x="317" y="0" width="1" height="20"/>
+			</line>
+			<staticText>
+				<reportElement uuid="099b7e6c-0e23-42ad-99e1-9debe37dd82a" x="318" y="0" width="133" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mobil Number]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="79937407-ae1b-41de-b788-ae8dc2e15471" mode="Transparent" x="0" y="0" width="822" height="20"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="8b63918d-c04a-473c-9e6c-be81c3a94a71" x="530" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="f7fbaeeb-0af2-4a7d-a697-27382269961b" x="451" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="4cd5b07d-0087-4e90-87b7-018c6a03ded8" x="603" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="6d8a3a53-3c7e-4a24-a7f2-daa55d03f662" x="676" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="d6f69e7b-d165-41ba-b3b9-107179df9f74" x="749" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="e265d470-07fd-4127-b95f-8e21b924d02d" x="317" y="0" width="1" height="20"/>
+			</line>
+			<textField>
+				<reportElement uuid="672bd557-3afc-4af5-b837-03965cd0b4e3" x="10" y="0" width="307" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{customers_custname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="835fce09-17c1-40b1-bcf7-dc006f3a2e66" x="318" y="0" width="133" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{customers_custphone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="04936ec8-2b37-4f6c-9f47-f0768b01d5f3" x="452" y="0" width="78" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MM-yyyy").format($F{sales_m_salesdate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e2f4c10f-09eb-4cf9-9d74-69cef546c9de" x="531" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MM-yyyy").format($F{sales_m_salesdate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="13f319a2-fb93-4071-8c19-0b5ffe33f24b" x="604" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{salesreturn_m_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4f72967b-1aea-45a0-b301-eabefcd684da" x="677" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{salesreturn_m_returnamount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2551f7d4-a5b9-4923-89c1-0589283c09ab" x="750" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{salesreturn_m_returncharge}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement uuid="80659bff-000a-47da-83b4-749496db093a" x="669" y="19" width="102" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="ac9c904b-c74e-4e3a-8d96-e0d7562f145c" x="771" y="19" width="51" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="E:/External JAR/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/report/final/commons-beanutils-1.8.0.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/report/final/commons-collections-2.1.1.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/report/final/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/report/final/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/report/final/iText-2.1.7.js1.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/report/final/jasperreports-5.0.1.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/report/final/jcommon-1.0.15.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/report/final/jdt-compiler-3.1.1.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/report/final/poi-3.7-20101029.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/ims_wizard.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/laf/JTattoo-1.6.11.jar"/>
+	<classpathentry kind="lib" path="E:/External JAR/new utils.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

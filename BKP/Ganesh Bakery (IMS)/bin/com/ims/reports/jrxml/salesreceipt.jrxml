@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesreceipt" pageWidth="595" pageHeight="842" columnWidth="549" leftMargin="36" rightMargin="10" topMargin="10" bottomMargin="10" uuid="fe4092de-200f-4ffa-a39d-70a72e3d2563">
+	<parameter name="prmfirmid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prmsalemid" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     firm.`firmname` AS firm_firmname,
+     firm.`licno` AS firm_licno,
+     firm.`firmaddr` AS firm_firmaddr,
+     firm.`firmprop` AS firm_firmprop,
+     firm.`firmphone` AS firm_firmphone,
+     customers.`custname` AS customers_custname,
+     customers.`custadd` AS customers_custadd,
+     customers.`custcity` AS customers_custcity,
+     customers.`custphone` AS customers_custphone,
+     customers.`debtamt` AS customers_debtamt,
+     products.`prodname` AS products_prodname,
+     products.`salesrate` AS products_salesrate,
+     sales_m.`custid` AS sales_m_custid,
+     sales_m.`salesdate` AS sales_m_salesdate,
+     sales_m.`subtotal` AS sales_m_subtotal,
+     sales_m.`vat` AS sales_m_vat,
+     sales_m.`discount` AS sales_m_discount,
+     sales_m.`total` AS sales_m_total,
+     sales_m.`paidamt` AS sales_m_paidamt,
+     sales_s.`prodqty` AS sales_s_prodqty,
+     sales_s.`prodrate` AS sales_s_prodrate,
+     sales_s.`totrate` AS sales_s_totrate,
+     sales_m.`salemid` AS sales_m_salemid
+FROM
+     `customers` customers INNER JOIN `sales_m` sales_m ON customers.`custid` = sales_m.`custid`
+     INNER JOIN `sales_s` sales_s ON sales_m.`salemid` = sales_s.`salemid`
+     INNER JOIN `products` products ON sales_s.`prodid` = products.`prodid`,
+     `firm` firm
+WHERE
+	sales_m.salemid = $P{prmsalemid}
+AND
+	firm.firmid = $P{prmfirmid}]]>
+	</queryString>
+	<field name="firm_firmname" class="java.lang.String"/>
+	<field name="firm_licno" class="java.lang.String"/>
+	<field name="firm_firmaddr" class="java.lang.String"/>
+	<field name="firm_firmprop" class="java.lang.String"/>
+	<field name="firm_firmphone" class="java.lang.String"/>
+	<field name="customers_custname" class="java.lang.String"/>
+	<field name="customers_custadd" class="java.lang.String"/>
+	<field name="customers_custcity" class="java.lang.String"/>
+	<field name="customers_custphone" class="java.lang.String"/>
+	<field name="customers_debtamt" class="java.lang.Float"/>
+	<field name="products_prodname" class="java.lang.String"/>
+	<field name="products_salesrate" class="java.lang.Float"/>
+	<field name="sales_m_custid" class="java.math.BigInteger"/>
+	<field name="sales_m_salesdate" class="java.sql.Date"/>
+	<field name="sales_m_subtotal" class="java.lang.Float"/>
+	<field name="sales_m_vat" class="java.lang.Float"/>
+	<field name="sales_m_discount" class="java.lang.Float"/>
+	<field name="sales_m_total" class="java.lang.Float"/>
+	<field name="sales_m_paidamt" class="java.lang.Float"/>
+	<field name="sales_s_prodqty" class="java.lang.Long"/>
+	<field name="sales_s_prodrate" class="java.lang.Float"/>
+	<field name="sales_s_totrate" class="java.lang.Float"/>
+	<field name="sales_m_salemid" class="java.math.BigInteger"/>
+	<title>
+		<band height="160" splitType="Stretch">
+			<textField>
+				<reportElement uuid="9258e6fb-520e-415d-9d6c-8f22b987df75" x="0" y="0" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="91d5be79-03ca-46ba-8159-1eadfcc246fd" x="0" y="20" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmaddr}.replace("\n", " ")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6c335553-6ae4-4360-8626-f0b5e1c98bbc" x="0" y="39" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmprop}+" ("+$F{firm_firmphone}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3a7101e4-ea94-4493-9479-21dd20fb00f8" x="0" y="82" width="423" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Customer Name : "+$F{customers_custname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a5819583-f723-4404-8aca-35be92657e30" x="397" y="59" width="152" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sales Date : "+new java.text.SimpleDateFormat("dd-MMM-yyyy").format($F{sales_m_salesdate})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5a5c1ca7-3810-4f2d-bed8-94c4743e15b0" x="0" y="102" width="546" height="19"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Address : "+$F{customers_custadd}.replace("\n", " ")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3078a323-ad35-439b-bcd2-4e0b44dd422f" x="0" y="121" width="201" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["City/Village : "+$F{customers_custcity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9b9f2afe-952f-4cbe-9f32-f322ea243f1b" x="1" y="137" width="245" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Mobile No. : "+$F{customers_custphone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="386c6d86-3dbc-4071-b7a2-21df6e31d6f3" x="1" y="63" width="245" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Bill No. : "+$F{sales_m_salemid}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<rectangle>
+				<reportElement uuid="c19519ae-7440-4074-8991-1913e9d6d89e" mode="Transparent" x="0" y="0" width="546" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="bcf64f76-0077-487a-ab8a-e3f78aeb809f" x="0" y="0" width="272" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Product Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4920e878-63f1-4ef2-9a24-8a63300cf0cb" x="273" y="0" width="78" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="28d800d8-421f-404b-8f5a-13a0218ebd3f" x="351" y="0" width="1" height="20"/>
+			</line>
+			<staticText>
+				<reportElement uuid="0de2d656-e271-40e6-9887-aaf79113114f" x="352" y="0" width="93" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Rate]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="ea88dd41-f0e2-4a77-b693-1f9bf17a019a" x="445" y="0" width="1" height="20"/>
+			</line>
+			<staticText>
+				<reportElement uuid="2f08a92b-7f9b-4479-a654-97e1941dca52" x="446" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="1c2c6636-a984-41c6-802f-c18cf290f360" x="272" y="0" width="1" height="20"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement uuid="13905166-d2ae-489d-9d87-080cf2ea5653" x="351" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="38b48859-c469-49f9-acaa-d09816f2fa16" x="445" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="c589e0d7-3942-4f54-a4d9-2b5788b66ce6" x="272" y="0" width="1" height="20"/>
+			</line>
+			<textField>
+				<reportElement uuid="4ea5152d-1abb-48c1-bdf0-667e522f76c3" x="274" y="0" width="77" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sales_s_prodqty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="034a81e9-c17d-4d1a-b16b-d66daca572e8" x="352" y="0" width="93" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sales_s_prodrate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="000d67cb-995e-4cd5-9bdf-a9665b96440a" x="446" y="0" width="99" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sales_s_totrate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="b8166f67-02bc-4203-96b5-10ec882273d4" x="0" y="0" width="1" height="20"/>
+			</line>
+			<textField>
+				<reportElement uuid="5ad61fef-559f-4c34-a27a-b9a23142c470" x="11" y="0" width="261" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{products_prodname}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="045b9278-b4f7-4986-b832-ba410f914607" x="545" y="0" width="1" height="20"/>
+			</line>
+		</band>
+	</detail>
+	<summary>
+		<band height="162">
+			<rectangle>
+				<reportElement uuid="caa9f2c0-8e04-4445-b37a-1f255c9bcd88" mode="Transparent" x="0" y="0" width="546" height="106"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="86e4e73c-a089-400d-905f-ddae27dd0ad5" x="445" y="0" width="1" height="106"/>
+			</line>
+			<staticText>
+				<reportElement uuid="3483aacf-9bc3-494d-975f-4294691ad1b0" x="335" y="0" width="110" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Sub Total : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3a261dd8-95db-46b2-b53b-5719275bd498" x="445" y="0" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{sales_m_subtotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="dc5ed33b-bbbf-4d33-894f-8af7a3758cf8" x="335" y="15" width="110" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Discount : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e7d4f5b9-160e-49df-8a4b-b6626961c3b5" x="445" y="15" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{sales_m_discount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="11d56123-43cb-427e-9626-5ad4be9b64ab" x="335" y="30" width="110" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Sub Total  1 : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="af5ba1fe-4c7c-4052-9d8d-2c941da87053" x="445" y="30" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{sales_m_subtotal}-$F{sales_m_discount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="94d889b6-ba4f-4632-b093-94531809ff02" x="445" y="45" width="102" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8a152634-2a2e-4bca-bed5-62889dba1532" x="335" y="46" width="110" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Vat : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f4bb21ad-31cd-455e-93bb-1b5126be5812" x="445" y="46" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{sales_m_vat}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e0c2a780-bafe-4a1c-bc60-a206b788caaa" x="335" y="61" width="110" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Grand Total : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d5007a19-2a01-4144-8d7b-896937019625" x="445" y="61" width="100" height="15"/>
+				<textElement textAlignment="Right">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sales_m_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a512217d-240c-4f97-be1b-b857f46a957e" x="335" y="76" width="110" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Paid Amount : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8d70ef32-2b42-472e-a1ad-10358740d537" x="445" y="76" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{sales_m_paidamt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="11ba854d-4f9a-42f3-ae99-d46b7e179962" x="336" y="91" width="109" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Remaining Amount : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c2c4a554-adf5-4e65-99cc-566415a53a94" x="445" y="92" width="100" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{sales_m_total}-$F{sales_m_paidamt}<0)?0:($F{sales_m_total}-$F{sales_m_paidamt})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d9722e15-7040-4a41-b905-97493dafccba" x="0" y="142" width="246" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{firm_firmname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f0ee6206-7152-4339-8eb2-198711fdf741" x="311" y="142" width="238" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{customers_custname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4175c7d4-f3a2-45fb-9407-41dea54446b9" x="1" y="10" width="35" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Note : ]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="d91de0e0-c1d0-4352-9ad7-2d7f45141d43" x="272" y="0" width="1" height="106"/>
+			</line>
+			<textField>
+				<reportElement uuid="7542419c-c361-44d8-be62-1ffc9a517512" x="1" y="87" width="271" height="19" forecolor="#FF0000"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Current Outstanding : "+$F{customers_debtamt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

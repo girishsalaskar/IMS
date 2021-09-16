@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesreceipt" pageWidth="595" pageHeight="842" columnWidth="549" leftMargin="36" rightMargin="10" topMargin="10" bottomMargin="10" uuid="fe4092de-200f-4ffa-a39d-70a72e3d2563">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="prmfirmid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prmsalemid" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     firm.`firmname` AS firm_firmname,
+     firm.`licno` AS firm_licno,
+     firm.`firmaddr` AS firm_firmaddr,
+     firm.`firmprop` AS firm_firmprop,
+     firm.`firmphone` AS firm_firmphone,
+     customers.`custname` AS customers_custname,
+     customers.`custadd` AS customers_custadd,
+     customers.`custcity` AS customers_custcity,
+     customers.`custphone` AS customers_custphone,
+     customers.`debtamt` AS customers_debtamt,
+     products.`prodname` AS products_prodname,
+     salesorder_m.`somid` AS salesorder_m_somid,
+     salesorder_m.`sodate` AS salesorder_m_sodate,
+     salesorder_s.`prodqty` AS salesorder_s_prodqty,
+     products.`salesrate` AS products_salesrate
+FROM
+     `customers` customers INNER JOIN `salesorder_m` salesorder_m ON customers.`custid` = salesorder_m.`custid`
+     INNER JOIN `salesorder_s` salesorder_s ON salesorder_m.`somid` = salesorder_s.`somid`
+     INNER JOIN `products` products ON salesorder_s.`prodid` = products.`prodid`,
+     `firm` firm
+WHERE
+     salesorder_m.`somid` = $P{prmsalemid}
+ AND firm.firmid = $P{prmfirmid}]]>
+	</queryString>
+	<field name="firm_firmname" class="java.lang.String"/>
+	<field name="firm_licno" class="java.lang.String"/>
+	<field name="firm_firmaddr" class="java.lang.String"/>
+	<field name="firm_firmprop" class="java.lang.String"/>
+	<field name="firm_firmphone" class="java.lang.String"/>
+	<field name="customers_custname" class="java.lang.String"/>
+	<field name="customers_custadd" class="java.lang.String"/>
+	<field name="customers_custcity" class="java.lang.String"/>
+	<field name="customers_custphone" class="java.lang.String"/>
+	<field name="customers_debtamt" class="java.lang.Float"/>
+	<field name="products_prodname" class="java.lang.String"/>
+	<field name="salesorder_m_somid" class="java.math.BigInteger"/>
+	<field name="salesorder_m_sodate" class="java.sql.Date"/>
+	<field name="salesorder_s_prodqty" class="java.lang.Integer"/>
+	<field name="products_salesrate" class="java.lang.Float"/>
+	<title>
+		<band height="187" splitType="Stretch">
+			<textField>
+				<reportElement uuid="9258e6fb-520e-415d-9d6c-8f22b987df75" x="0" y="0" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="91d5be79-03ca-46ba-8159-1eadfcc246fd" x="0" y="20" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmaddr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6c335553-6ae4-4360-8626-f0b5e1c98bbc" x="0" y="39" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmprop}+" ("+$F{firm_firmphone}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3a7101e4-ea94-4493-9479-21dd20fb00f8" x="-1" y="112" width="423" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Customer Name : "+$F{customers_custname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a5819583-f723-4404-8aca-35be92657e30" x="396" y="93" width="152" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Quotation Date : "+new java.text.SimpleDateFormat("dd-MMM-yyyy").format($F{salesorder_m_sodate})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5a5c1ca7-3810-4f2d-bed8-94c4743e15b0" x="-1" y="132" width="546" height="19"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Address : "+$F{customers_custadd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3078a323-ad35-439b-bcd2-4e0b44dd422f" x="-1" y="151" width="201" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["City/Village : "+$F{customers_custcity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9b9f2afe-952f-4cbe-9f32-f322ea243f1b" x="0" y="167" width="245" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Mobile No. : "+$F{customers_custphone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="386c6d86-3dbc-4071-b7a2-21df6e31d6f3" x="0" y="93" width="245" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Quotation No. : "+$F{salesorder_m_somid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1179c858-6d07-4b52-9544-a740ab4bcec4" x="0" y="59" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Quotation"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<rectangle>
+				<reportElement uuid="c19519ae-7440-4074-8991-1913e9d6d89e" mode="Transparent" x="0" y="0" width="546" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="bcf64f76-0077-487a-ab8a-e3f78aeb809f" x="0" y="0" width="272" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Product Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4920e878-63f1-4ef2-9a24-8a63300cf0cb" x="273" y="0" width="78" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="28d800d8-421f-404b-8f5a-13a0218ebd3f" x="351" y="0" width="1" height="20"/>
+			</line>
+			<staticText>
+				<reportElement uuid="0de2d656-e271-40e6-9887-aaf79113114f" x="352" y="0" width="93" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rate]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="ea88dd41-f0e2-4a77-b693-1f9bf17a019a" x="445" y="0" width="1" height="20"/>
+			</line>
+			<staticText>
+				<reportElement uuid="2f08a92b-7f9b-4479-a654-97e1941dca52" x="446" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="1c2c6636-a984-41c6-802f-c18cf290f360" x="272" y="0" width="1" height="20"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<rectangle>
+				<reportElement uuid="7dae2135-ac78-4c47-a217-8c37827e21af" mode="Transparent" x="0" y="0" width="546" height="20"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="13905166-d2ae-489d-9d87-080cf2ea5653" x="351" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="38b48859-c469-49f9-acaa-d09816f2fa16" x="445" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="c589e0d7-3942-4f54-a4d9-2b5788b66ce6" x="272" y="0" width="1" height="20"/>
+			</line>
+			<textField>
+				<reportElement uuid="4ea5152d-1abb-48c1-bdf0-667e522f76c3" x="274" y="0" width="77" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{salesorder_s_prodqty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5ad61fef-559f-4c34-a27a-b9a23142c470" x="11" y="0" width="261" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{products_prodname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e4fe6e58-3534-4934-b9ea-00e29f3da366" x="352" y="0" width="93" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{products_salesrate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bcbe23f3-051a-4466-8776-a9602a583788" x="446" y="0" width="90" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{products_salesrate}*$F{salesorder_s_prodqty}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="65">
+			<textField>
+				<reportElement uuid="d9722e15-7040-4a41-b905-97493dafccba" x="302" y="44" width="246" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{firm_firmname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f0ee6206-7152-4339-8eb2-198711fdf741" x="0" y="44" width="238" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{customers_custname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

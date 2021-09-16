@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="shopstatus" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="25" rightMargin="15" topMargin="15" bottomMargin="15" uuid="35f5cdee-4a7f-4cfd-9b2e-04319d641e24">
+	<parameter name="prmfirmid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prmstartdate" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prmenddate" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+(select sum(purchases_m.total) from purchases_m where purchases_m.purchasedate>=$P{prmstartdate} and purchases_m.purchasedate<=$P{prmenddate}) AS totpurch,
+(select sum(sales_m.total) from sales_m where sales_m.salesdate>=$P{prmstartdate} and sales_m.salesdate<=$P{prmenddate}) AS totsales,
+(select sum(customers.debtamt) from customers) AS debtors,
+(select sum(suppliers.supcr) from suppliers) AS creditors,
+(select sum(emppayment.paidamt) from emppayment where emppayment.paydate>=$P{prmstartdate} and emppayment.paydate<=$P{prmenddate}) as paidsalary,
+(select sum(empm.remsalary) from empm) as remsalary,
+(select sum(expenses.expamt) from expenses where expenses.expdate>=$P{prmstartdate} and expenses.expdate<=$P{prmenddate}) as totexpenses,
+(select sum(empm.acbal) from empm) as advancetoemp,
+(select assets.astvalue from assets where assets.astname='Crate') as availcrates,
+(select sum(customers.crate_holds) from customers) as crateshold,
+(select sum(products.instock*products.purchrate) from products) as stock,
+firm.firmname, firm.firmprop
+from firm
+where firm.firmid=$P{prmfirmid}]]>
+	</queryString>
+	<field name="totpurch" class="java.lang.Double"/>
+	<field name="totsales" class="java.lang.Double"/>
+	<field name="debtors" class="java.lang.Double"/>
+	<field name="creditors" class="java.lang.Double"/>
+	<field name="paidsalary" class="java.lang.Double"/>
+	<field name="remsalary" class="java.lang.Double">
+		<fieldDescription><![CDATA[Employees Remaining Salary]]></fieldDescription>
+	</field>
+	<field name="totexpenses" class="java.lang.Double"/>
+	<field name="advancetoemp" class="java.lang.Double"/>
+	<field name="availcrates" class="java.lang.Long"/>
+	<field name="crateshold" class="java.lang.Long"/>
+	<field name="stock" class="java.lang.Double"/>
+	<field name="firmname" class="java.lang.String">
+		<fieldDescription><![CDATA[Firm Name]]></fieldDescription>
+	</field>
+	<field name="firmprop" class="java.lang.String">
+		<fieldDescription><![CDATA[Firm Proprietor Name]]></fieldDescription>
+	</field>
+	<title>
+		<band height="812" splitType="Stretch">
+			<textField>
+				<reportElement uuid="1240321c-4ec2-4645-bb42-1542af03e996" x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firmname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d3f1b5a1-2e62-44a3-8bde-2720430270e2" x="0" y="20" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firmprop}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5704a722-b1fb-4eeb-bf8f-59478da254c8" x="0" y="56" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Business status from "+new java.text.SimpleDateFormat("dd-MMM-yyyy").format($P{prmstartdate})+" to "+new java.text.SimpleDateFormat("dd-MMM-yyyy").format($P{prmenddate})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="43e164c1-bdb4-4c35-8e0a-74736fea82ef" x="0" y="96" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trading, Profit and Loss Statement]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="53449659-2bc5-4454-a061-d5f9d0887b57" mode="Transparent" x="0" y="116" width="555" height="138"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="70f83494-4aed-4c89-8a46-0bf207681d16" x="278" y="116" width="1" height="138"/>
+			</line>
+			<line>
+				<reportElement uuid="51519751-4f58-4110-a3ff-e7a1f544e4bc" x="197" y="116" width="1" height="138"/>
+			</line>
+			<line>
+				<reportElement uuid="6c8ea4de-7855-4c4f-ba7b-f5405d2c7cca" x="476" y="116" width="1" height="138"/>
+			</line>
+			<line>
+				<reportElement uuid="2009fbc7-662e-49b7-ba0c-8c9dd8f3bed9" x="0" y="136" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="520dd130-4e33-418d-bb3f-b8268213f28c" x="0" y="116" width="197" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Particulars]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5f4b0e6e-d507-424e-9856-cd73c2c31ca7" x="198" y="116" width="80" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount Rs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e9971206-31b9-4916-8b66-9caf297b6d60" x="477" y="117" width="80" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount Rs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5d599cc6-f424-43d3-91e3-32da3cc88564" x="279" y="117" width="197" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Particulars]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cc37d3b5-dec2-4354-9ac2-0713aca22ffc" x="0" y="137" width="197" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[  Total Purchases]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7eb6b176-d592-498c-be25-343ef8f47f2a" x="279" y="137" width="197" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[  Total Sales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="baf0d812-2af1-4290-b763-aa2e32afcbb6" x="0" y="285" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Assets and Liabilities Statement]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="b14db11f-0e89-462a-9add-fe816ffa6e07" mode="Transparent" x="0" y="305" width="555" height="138"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="bffa47ae-5079-4866-8e51-03a7ca9a25b2" x="278" y="305" width="1" height="138"/>
+			</line>
+			<line>
+				<reportElement uuid="1e888d11-6572-4f0e-a26c-9c93740b12e6" x="198" y="305" width="1" height="138"/>
+			</line>
+			<line>
+				<reportElement uuid="19559315-9c7a-4d6e-bc3f-d65da9af4aa3" x="477" y="305" width="1" height="138"/>
+			</line>
+			<line>
+				<reportElement uuid="c59d3f9e-1ccb-42d4-b4ea-448c3625ce0b" x="0" y="326" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="9e186552-b523-4756-88dc-c31211ff209d" x="198" y="305" width="80" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount Rs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e0da61a9-1a2a-4875-91d2-0aa6118c33c2" x="279" y="306" width="197" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Assets]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3008b04a-22da-4c65-afa6-5e00684b269b" x="477" y="306" width="80" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount Rs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5d25676c-a5b4-4601-b7f7-6f0a39a53674" x="0" y="305" width="197" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Liabilities]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4b945fe4-e646-48cd-9dd4-55fa1c2fcd9d" x="199" y="137" width="77" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{totpurch}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e6e04dc7-244e-4dbe-accb-543ffec46976" x="478" y="136" width="75" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{totsales}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a213e402-4041-4058-9062-9a47f708386d" x="279" y="327" width="197" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[  Debtors]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="68c2227c-d484-4d62-8d0f-68c906d0c1a1" x="0" y="327" width="197" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[  Creditors]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b3d77bbe-ebc8-4423-b240-d99d7b5f8f5a" x="0" y="157" width="197" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[  Salary Paid]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7e58ab75-2619-40f1-ab00-7c91b1eefd2f" x="199" y="156" width="77" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{paidsalary}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0083a98f-83d3-4289-92dd-8697a72dffcf" x="0" y="347" width="197" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[  Salary Pending]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="524ab749-ce2a-4fea-9437-a7ba83ded719" x="0" y="177" width="197" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[  Total Expenses]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="669b61cd-b40e-4ced-b50b-13c9475683b2" x="199" y="176" width="77" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{totexpenses}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3f36972d-11f4-4537-8800-47bb30c07fdf" x="279" y="347" width="197" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[  Advance to Employee]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f29c7847-4fa2-4dbd-a8b8-7894c086a820" x="478" y="327" width="75" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{debtors}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="535518c7-5271-4d1e-b250-0a8ff90309f2" x="199" y="327" width="77" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{creditors}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="47a182ff-63e5-4476-a788-b1f19df24f71" x="199" y="347" width="77" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{remsalary}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="53c10792-b838-4684-9a0c-cb03ecba96d2" x="478" y="347" width="75" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{advancetoemp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="add4d68e-d722-4dfd-840a-8730daf53c43" x="279" y="367" width="197" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[  Total Stock]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="877c962b-3030-405b-8c17-5b67030f9079" x="478" y="367" width="75" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0bb45266-fb73-4839-bd7f-95888d3fd203" x="0" y="471" width="197" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Total Crates : "+($F{availcrates}+$F{crateshold})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d1b1ad11-762e-4c23-bef4-407f2d1b2cda" x="0" y="491" width="197" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Available Crates : "+$F{availcrates}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="52f4ab60-a73e-402d-953d-c04096b89d72" x="0" y="531" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{totsales}-($F{totpurch}+$F{paidsalary}+$F{totexpenses}))<0?"Approx. Loss : "+($F{totsales}-($F{totpurch}+$F{paidsalary}+$F{totexpenses})):(($F{totsales}-($F{totpurch}+$F{paidsalary}+$F{totexpenses}))==0?"No Profit/Loss":"Approx. Profit : "+($F{totsales}-($F{totpurch}+$F{paidsalary}+$F{totexpenses})))]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

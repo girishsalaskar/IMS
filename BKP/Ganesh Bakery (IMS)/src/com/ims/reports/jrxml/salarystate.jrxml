@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salarystate" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="2809b279-ece4-4d43-b1a3-7a111b782db9">
+	<parameter name="firm_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="emp_id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sal_month" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sal_year" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     emppayment.`salmonth` AS emppayment_salmonth,
+     emppayment.`salyear` AS emppayment_salyear,
+     emppayment.`workingdays` AS emppayment_workingdays,
+     emppayment.`attenddays` AS emppayment_attenddays,
+     emppayment.`netsalary` AS emppayment_netsalary,
+     emppayment.`deduct` AS emppayment_deduct,
+     emppayment.`advdeduct` AS emppayment_advdeduct,
+     emppayment.`paidamt` AS emppayment_paidamt,
+     emppayment.`remamt` AS emppayment_remamt,
+     emppayment.`paydate` AS emppayment_paydate,
+     empm.`empname` AS empm_empname,
+     empm.`empmo` AS empm_empmo,
+     empm.`joindate` AS empm_joindate,
+     empm.`desgn` AS empm_desgn,
+     empm.`acbal` AS empm_acbal,
+     empm.`remsalary` AS empm_remsalary,
+     firm.`firmname` AS firm_firmname,
+     firm.`firmaddr` AS firm_firmaddr,
+     firm.`firmprop` AS firm_firmprop,
+     firm.`firmphone` AS firm_firmphone,
+     emppayment.`empsalary` AS emppayment_empsalary,
+     empm.`empadd` AS empm_empadd
+FROM
+     `empm` empm INNER JOIN `emppayment` emppayment ON empm.`empid` = emppayment.`empid`,
+     `firm` firm
+WHERE
+     firm.firmid = $P{firm_id}
+     and empm.empid = $P{emp_id}
+     and emppayment.salmonth = $P{sal_month}
+     and emppayment.salyear = $P{sal_year}]]>
+	</queryString>
+	<field name="emppayment_salmonth" class="java.lang.Integer"/>
+	<field name="emppayment_salyear" class="java.lang.Integer"/>
+	<field name="emppayment_workingdays" class="java.lang.Integer"/>
+	<field name="emppayment_attenddays" class="java.lang.Integer"/>
+	<field name="emppayment_netsalary" class="java.lang.Integer"/>
+	<field name="emppayment_deduct" class="java.lang.Integer"/>
+	<field name="emppayment_advdeduct" class="java.lang.Integer"/>
+	<field name="emppayment_paidamt" class="java.lang.Integer"/>
+	<field name="emppayment_remamt" class="java.lang.Integer"/>
+	<field name="emppayment_paydate" class="java.sql.Date"/>
+	<field name="empm_empname" class="java.lang.String"/>
+	<field name="empm_empmo" class="java.lang.String"/>
+	<field name="empm_joindate" class="java.sql.Date"/>
+	<field name="empm_desgn" class="java.lang.String"/>
+	<field name="empm_acbal" class="java.lang.Integer"/>
+	<field name="empm_remsalary" class="java.lang.Integer"/>
+	<field name="firm_firmname" class="java.lang.String"/>
+	<field name="firm_firmaddr" class="java.lang.String"/>
+	<field name="firm_firmprop" class="java.lang.String"/>
+	<field name="firm_firmphone" class="java.lang.String"/>
+	<field name="emppayment_empsalary" class="java.lang.Integer"/>
+	<field name="empm_empadd" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="693">
+			<rectangle>
+				<reportElement uuid="eecbd34b-7617-41f0-960d-730724f5851d" x="0" y="0" width="575" height="317"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="984a7e97-a332-40e0-9fd6-fd1abed29d50" x="22" y="92" width="84" height="14"/>
+				<textElement/>
+				<text><![CDATA[Employee Name : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a0d9fbde-bb5b-4acc-907e-16b6aed6b235" x="106" y="92" width="313" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{empm_empname}+" ("+$F{empm_desgn}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="56385d2a-3dd4-48f3-bfb8-0055632e66e6" x="22" y="12" width="535" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="33cfe0aa-c611-4512-b36a-7a60ca92ee1e" x="22" y="32" width="535" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmaddr}.replace('\n',' ')]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="94ae1e5f-df8b-4bf3-9b2d-1369c177491b" x="22" y="52" width="535" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmprop}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d15aa9a7-d9f0-4140-9c76-f6149604c118" x="22" y="72" width="535" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmphone}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement uuid="2fbc30c9-bca7-4ee4-bbeb-55de8dd6a39f" x="419" y="92" width="138" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MMM-yyyy h.mm a").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ca7fd956-3be2-4afe-ac8d-8267d97a0321" x="22" y="119" width="84" height="13"/>
+				<textElement/>
+				<text><![CDATA[Mobile Number : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="549fc056-0e99-4254-b879-549239a7e01a" x="106" y="119" width="115" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{empm_empmo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3d620f4c-1c23-473d-aaeb-c1de2ec2c3f2" x="35" y="204" width="152" height="13"/>
+				<textElement/>
+				<text><![CDATA[Employee Salary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a0d5ef2b-396d-4f75-a1d8-5e8c8b87d20b" x="221" y="119" width="56" height="13"/>
+				<textElement/>
+				<text><![CDATA[Join Date : ]]></text>
+			</staticText>
+			<textField pattern="dd-MMM-yyyy">
+				<reportElement uuid="335c4999-7a68-4f33-b345-55bb27ad273d" x="277" y="119" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{empm_joindate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="84b0bf18-20ac-4492-8ec0-a8ee0798fc07" x="22" y="106" width="55" height="13"/>
+				<textElement/>
+				<text><![CDATA[Address : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="16220dfd-2a9b-4dcc-9e84-832cb3e6cceb" x="77" y="106" width="480" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{empm_empadd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c2f3e103-929f-4126-b13f-60305e9b0b4f" x="22" y="142" width="535" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Salary Statement for "+$F{emppayment_salmonth}+"/"+$F{emppayment_salyear}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ee4360cf-5a83-439e-a645-e70551152372" x="35" y="217" width="152" height="14"/>
+				<textElement/>
+				<text><![CDATA[Deductions]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ec4c566e-6db5-4344-870b-5df116b4eca0" x="35" y="231" width="152" height="14"/>
+				<textElement/>
+				<text><![CDATA[Deduction from Previous Advance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="863a283a-4d66-4ef2-9505-e4c02585670f" x="298" y="202" width="55" height="14"/>
+				<textElement/>
+				<text><![CDATA[Net Salary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="68e60155-9914-4127-8ff3-967042b70829" x="298" y="216" width="68" height="15"/>
+				<textElement/>
+				<text><![CDATA[Paid Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="02aa6ee7-1091-4d8f-b171-260ab7d77b05" x="298" y="231" width="96" height="13"/>
+				<textElement/>
+				<text><![CDATA[Remaining Amount]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="52448f20-37da-436c-85b2-7369b25530a6" x="187" y="217" width="90" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{emppayment_deduct}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5456aaf0-b7f9-4154-bcda-c1a57366029d" x="187" y="231" width="90" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{emppayment_advdeduct}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6c46f5da-d988-473a-8c1e-07582678416d" x="450" y="202" width="90" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emppayment_netsalary}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a148521d-2c0c-4e42-93dc-99fefcdbdd73" x="450" y="216" width="90" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emppayment_paidamt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="773153f3-6a7d-4a50-a7db-cfa10dba30e1" x="450" y="231" width="90" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emppayment_remamt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1be2157a-2bcd-451f-8fa3-f10aa098a43f" x="187" y="204" width="90" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{emppayment_empsalary}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c1e35a0c-dc4e-4887-970c-0dbc27dba599" x="471" y="277" width="86" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount Received]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3285d32a-7d20-4005-8530-c36576eb085d" x="377" y="291" width="180" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{empm_empname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e5a9083e-3f4f-460d-8636-35b6ae8edf40" x="22" y="277" width="66" height="14"/>
+				<textElement/>
+				<text><![CDATA[Amount Paid]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a085878f-87c1-4d90-a60f-9b17fa42b03d" x="22" y="291" width="208" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{firm_firmprop}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="42fbb8cf-0fd9-4010-9acd-6076cff27483" x="35" y="166" width="152" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Working Days : "+$F{emppayment_workingdays}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="10e12925-80e8-4bfd-a8de-59a20efe139b" x="223" y="166" width="143" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Present Days : "+$F{emppayment_attenddays}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="24e13933-2ef9-4b62-93c0-358777cd9933" x="394" y="166" width="146" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Absent Days : "+($F{emppayment_workingdays}-$F{emppayment_attenddays})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b3fe6d3d-ca85-445f-b0c7-bdce0a29dabe" x="22" y="653" width="66" height="14"/>
+				<textElement/>
+				<text><![CDATA[Amount Paid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="92720003-589c-422d-9dec-0c14b6ab6d9f" x="35" y="593" width="152" height="14"/>
+				<textElement/>
+				<text><![CDATA[Deductions]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0911bd95-4ee1-4b32-b38e-f55e99c094db" x="187" y="593" width="90" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{emppayment_deduct}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="dd071a94-5f07-4a6e-a080-5936d1021873" x="298" y="607" width="96" height="13"/>
+				<textElement/>
+				<text><![CDATA[Remaining Amount]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7ff3cc79-0b80-4ff8-b39c-04e356e3f3f5" x="22" y="448" width="535" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmphone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a64df989-634d-484d-b8ac-ace69ec928f1" x="394" y="542" width="146" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Absent Days : "+($F{emppayment_workingdays}-$F{emppayment_attenddays})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e6b7906d-a2a0-40ef-b07f-ea690dbbb9f5" x="377" y="667" width="180" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{empm_empname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e824129f-1a81-4c36-a66a-e212098fec76" x="450" y="607" width="90" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emppayment_remamt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0f38967e-f0d5-4cb5-b1fc-b575e085fbe8" x="35" y="607" width="152" height="14"/>
+				<textElement/>
+				<text><![CDATA[Deduction from Previous Advance]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="914553a1-c569-4c73-84d7-b1f2663cca6a" x="106" y="495" width="115" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{empm_empmo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6a5dee41-eaa4-4080-b030-75cf103a22f3" x="22" y="495" width="84" height="13"/>
+				<textElement/>
+				<text><![CDATA[Mobile Number : ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="e9ae5a5b-c097-4eb8-915d-fb86fc598497" mode="Transparent" x="0" y="376" width="575" height="317"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="f1ff0137-50f1-4d01-9d44-47789ed43b1c" x="223" y="542" width="143" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Present Days : "+$F{emppayment_attenddays}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ea2deac1-9cd6-47e4-8c34-9453c1dc6f9e" x="187" y="607" width="90" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{emppayment_advdeduct}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="efae71ad-8356-4e20-8599-8017cfe600ab" x="22" y="468" width="84" height="14"/>
+				<textElement/>
+				<text><![CDATA[Employee Name : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0ebebcbd-44b7-48e9-9e9a-490b5bd1af53" x="22" y="408" width="535" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmaddr}.replace('\n',' ')]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9e02e719-4403-47b9-9e6c-d58f79df840f" x="106" y="468" width="313" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{empm_empname}+" ("+$F{empm_desgn}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8302c4cc-a474-48b3-9319-9531630ac36e" x="450" y="592" width="90" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emppayment_paidamt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yyyy">
+				<reportElement uuid="7a654779-0016-4787-a138-0abd4f6ba427" x="277" y="495" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{empm_joindate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="cca735e5-ad20-48a9-ad50-c6a3cd7ea722" x="298" y="592" width="68" height="15"/>
+				<textElement/>
+				<text><![CDATA[Paid Amount]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1f972e2d-23d6-4e3c-899e-7c1f878820b2" x="77" y="482" width="480" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{empm_empadd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="19ff74dc-b989-419d-83b4-002dcbb9fbde" x="22" y="667" width="208" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{firm_firmprop}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4c7ce9eb-2359-4f95-823c-ca394a95d249" x="298" y="578" width="55" height="14"/>
+				<textElement/>
+				<text><![CDATA[Net Salary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a13afaff-afac-441c-be1c-f98cb06e73b7" x="471" y="653" width="86" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount Received]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a72393df-6482-4416-98aa-1008cb113bf3" x="35" y="580" width="152" height="13"/>
+				<textElement/>
+				<text><![CDATA[Employee Salary]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="385f0086-c1e5-48ac-bdf3-15f22c5ed124" x="22" y="388" width="535" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d2c87d54-5b43-4461-9bb2-5d1bc798a942" x="22" y="428" width="535" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmprop}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="53680815-6b21-46ff-848a-2bd9477fea60" x="35" y="542" width="152" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Working Days : "+$F{emppayment_workingdays}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5c212418-8cf5-480b-bc30-c7fe1e357290" x="22" y="518" width="535" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Salary Statement for "+$F{emppayment_salmonth}+"/"+$F{emppayment_salyear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ad59e894-e2f6-47d2-a871-032f2cff679c" x="450" y="578" width="90" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emppayment_netsalary}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="16488ac7-4569-4ec6-aded-8927794fd739" x="221" y="495" width="56" height="13"/>
+				<textElement/>
+				<text><![CDATA[Join Date : ]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement uuid="ec9dadf9-5aff-4940-b0a9-a479179b4691" x="419" y="468" width="138" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MMM-yyyy h.mm a").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="75a57e17-da8e-455f-b9eb-b19112f5c100" x="187" y="580" width="90" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{emppayment_empsalary}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="1116b89c-fff7-4620-9c91-ec903823f068" x="22" y="482" width="55" height="13"/>
+				<textElement/>
+				<text><![CDATA[Address : ]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4c81e645-c11b-444c-ae04-d42a59895bec" x="0" y="347" width="571" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

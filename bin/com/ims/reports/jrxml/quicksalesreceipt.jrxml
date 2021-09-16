@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesreceipt" pageWidth="595" pageHeight="842" columnWidth="549" leftMargin="36" rightMargin="10" topMargin="10" bottomMargin="10" uuid="fe4092de-200f-4ffa-a39d-70a72e3d2563">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="prmfirmid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prmcustname" class="java.lang.String"/>
+	<parameter name="prmsalesdate" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     firm.`firmname` AS firm_firmname,
+     firm.`licno` AS firm_licno,
+     firm.`firmaddr` AS firm_firmaddr,
+     firm.`firmprop` AS firm_firmprop,
+     firm.`firmphone` AS firm_firmphone,
+     runnupcustprods.`prodname` AS runnupcustprods_prodname,
+     runnupcustprods.`prodcost` AS runnupcustprods_prodcost,
+     runnupcustprods.`custname` AS runnupcustprods_custname,
+     runnupcustprods.`salesdate` AS runnupcustprods_salesdate,
+     runnupcustprods.`grandtotal` AS runnupcustprods_grandtotal,
+     runnupcustprods.`prodmid` AS runnupcustprods_prodmid
+FROM
+     `runnupcustprods` runnupcustprods,
+     `firm` firm
+WHERE
+     firm.firmid = $P{prmfirmid}
+ AND runnupcustprods.`custname`=$P{prmcustname}
+ AND runnupcustprods.`salesdate`=$P{prmsalesdate}]]>
+	</queryString>
+	<field name="firm_firmname" class="java.lang.String"/>
+	<field name="firm_licno" class="java.lang.String"/>
+	<field name="firm_firmaddr" class="java.lang.String"/>
+	<field name="firm_firmprop" class="java.lang.String"/>
+	<field name="firm_firmphone" class="java.lang.String"/>
+	<field name="runnupcustprods_prodname" class="java.lang.String"/>
+	<field name="runnupcustprods_prodcost" class="java.lang.Double"/>
+	<field name="runnupcustprods_custname" class="java.lang.String"/>
+	<field name="runnupcustprods_salesdate" class="java.sql.Date"/>
+	<field name="runnupcustprods_grandtotal" class="java.lang.Double"/>
+	<field name="runnupcustprods_prodmid" class="java.math.BigInteger"/>
+	<title>
+		<band height="109" splitType="Stretch">
+			<textField>
+				<reportElement uuid="9258e6fb-520e-415d-9d6c-8f22b987df75" x="0" y="0" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="91d5be79-03ca-46ba-8159-1eadfcc246fd" x="0" y="20" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmaddr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6c335553-6ae4-4360-8626-f0b5e1c98bbc" x="0" y="39" width="549" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firm_firmprop}+" ("+$F{firm_firmphone}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3a7101e4-ea94-4493-9479-21dd20fb00f8" x="0" y="79" width="423" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Customer Name : "+$F{runnupcustprods_custname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a5819583-f723-4404-8aca-35be92657e30" x="397" y="59" width="152" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sales Date : "+new java.text.SimpleDateFormat("dd-MMM-yyyy").format($F{runnupcustprods_salesdate})]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<rectangle>
+				<reportElement uuid="c19519ae-7440-4074-8991-1913e9d6d89e" mode="Transparent" x="0" y="0" width="546" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="bcf64f76-0077-487a-ab8a-e3f78aeb809f" x="0" y="0" width="272" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Product Name]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="28d800d8-421f-404b-8f5a-13a0218ebd3f" x="386" y="0" width="1" height="20"/>
+			</line>
+			<staticText>
+				<reportElement uuid="2f08a92b-7f9b-4479-a654-97e1941dca52" x="387" y="0" width="159" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement uuid="c589e0d7-3942-4f54-a4d9-2b5788b66ce6" x="386" y="0" width="1" height="20"/>
+			</line>
+			<textField>
+				<reportElement uuid="000d67cb-995e-4cd5-9bdf-a9665b96440a" x="397" y="0" width="136" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{runnupcustprods_prodcost}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5ad61fef-559f-4c34-a27a-b9a23142c470" x="11" y="0" width="350" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{runnupcustprods_prodname}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement uuid="7dae2135-ac78-4c47-a217-8c37827e21af" mode="Transparent" x="0" y="0" width="546" height="20"/>
+			</rectangle>
+		</band>
+	</detail>
+	<summary>
+		<band height="36">
+			<rectangle>
+				<reportElement uuid="caa9f2c0-8e04-4445-b37a-1f255c9bcd88" mode="Transparent" x="0" y="0" width="546" height="30"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="3483aacf-9bc3-494d-975f-4294691ad1b0" x="287" y="0" width="110" height="30"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Total : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3a261dd8-95db-46b2-b53b-5719275bd498" x="397" y="0" width="136" height="30"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{runnupcustprods_grandtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

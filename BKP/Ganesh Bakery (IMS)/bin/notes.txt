@@ -1,0 +1,100 @@
+ganesh_ims
+3SquareGSR
+
+root
+rtto
+
+Important Changes
+1.  Make payment form and report generic
+
+Problem : 
+1.	Reseting mysql password is so easy (hacking mysql db), find the appropriate solution for that.
+
+Solutions : 
+1. Truncate All Tables : 
+		SET FOREIGN_KEY_CHECKS = 0; 
+		TRUNCATE table1; /* Delete Tables One by One */
+		SET FOREIGN_KEY_CHECKS = 1;
+
+2.	Run Garbage Collector
+		Solution 1 : 
+		
+		Runtime r=Runtime.getRuntime();
+		JOptionPane.showMessageDialog(rootPane, "Maximum : "+(r.maxMemory()/1024)+"\n"
+				+ "Free : "+(r.freeMemory()/1024));
+		r.gc();
+		JOptionPane.showMessageDialog(rootPane, "Maximum : "+(r.maxMemory()/1024)+"\n"
+				+ "Free : "+(r.freeMemory()/1024));
+		
+		Solution 2 : 
+		
+		java.util.Timer t=new java.util.Timer();
+		t.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				Runtime.getRuntime().gc();
+			}
+		}, 1000, 10000);
+
+3.	Insert into and read picture from database.
+
+		Insert picture in Database
+		
+		    String INSERT_PICTURE = "insert into MyPictures(id, name, photo) values (?, ?, ?)";
+		
+		    FileInputStream fis = null;
+		    PreparedStatement ps = null;
+		    try {
+		      conn.setAutoCommit(false);
+		      File file = new File("myPhoto.png");
+		      fis = new FileInputStream(file);
+		      ps = conn.prepareStatement(INSERT_PICTURE);
+		      ps.setString(1, "001");
+		      ps.setString(2, "name");
+		      ps.setBinaryStream(3, fis, (int) file.length());
+		      ps.executeUpdate();
+		      conn.commit();
+		    } finally {
+		      ps.close();
+		      fis.close();
+		    }
+		  }
+		}
+		
+		
+		
+		Read Picture from Database
+		
+		    String sql = "SELECT name, description, image FROM pictures ";
+		    PreparedStatement stmt = conn.prepareStatement(sql);
+		    ResultSet resultSet = stmt.executeQuery();
+		    while (resultSet.next()) {
+		      String name = resultSet.getString(1);
+		      String description = resultSet.getString(2);
+		      File image = new File("D:\\java.gif");
+		      FileOutputStream fos = new FileOutputStream(image);
+		
+		      byte[] buffer = new byte[1];
+		      InputStream is = resultSet.getBinaryStream(3);
+		      while (is.read(buffer) > 0) {
+		        fos.write(buffer);
+		      }
+		      fos.close();
+		    }
+		    conn.close();
+		  }
+		}
+
+
+
+
+
+
+
+
+
+
+
+ Remove all privilages of user : 
+ 	remove all privileges on db.* from user;
